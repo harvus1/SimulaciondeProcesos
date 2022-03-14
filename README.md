@@ -1,8 +1,8 @@
-### Simulacion de Procesos
+# Simulacion de Procesos
 
 Programa para simular:
 
-####Memoria principal
+**Memoria principal**
                 
 * De tamaño N (establecido por el equipo) usando bloques de X tamaño
 (establecido por el equipo), todo en base hexadecimal, con un espacio reservado
@@ -14,7 +14,7 @@ especificando el espacio de direcciones asignado a cada proceso
 * Cuando un proceso termina de ser ejecutado, este debe ser quitado de la
 memoria principal de manera que deje un espacio libre para un nuevo proceso
 
-####Agregar procesos
+**Agregar procesos**
 * Se crearán procesos en los espacios libres de la memoria principal, cada proceso
 tendrá un tamaño aleatorio al momento de ser creado, por lo que se debe buscar
 un espacio que abarque todo el agrupamiento de recursos de manera continua.
@@ -26,7 +26,7 @@ quantum
 que no hay suficiente espacio en memoria principal para el proceso
 * El activador siempre tendrá el mismo tiempo de consumo
 
-####Contador de programa (Program counter)
+**Contador de programa (Program counter)**
 * Mostrar la dirección en memoria de la instrucción en curso del proceso elegido
 por el planificador
 * Cada instrucción ejecutada será a razón de 1s real, es decir, 1 ms será
@@ -37,10 +37,10 @@ asociado al proceso que está ejecutándose
 * El activador también debe aparecer cuando este efectúe la conmutación de
 procesos
 
-#### Reloj de sistema
+**Reloj de sistema**
 * Hora del sistema a razón de 1s real.
 
-####Planificación por turno circular
+**Planificación por turno circular**
 * Establecer un quantum, a razón de 1s real
 * La duración de cada proceso (tiempo de ejecución) se establecerá en la creación
 del proceso, por lo que es de duración aleatoria y el rango lo definirá cada equipo
@@ -51,4 +51,3 @@ Se debe mostrar el bloque del activador al momento de cambiar de un proceso a ot
 duración quedará a discreción del equipo
 * Historial de procesos
 Hora de inicio de cada proceso y hora de finalización de cada proceso
-
