@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author pablo
  */
 public class main extends javax.swing.JFrame {
     Hilo1 hilo1;
@@ -24,15 +23,16 @@ public class main extends javax.swing.JFrame {
     int bandera=1;
     
     int ind =0; 
+    int cantidadprocesos = 0;
+    int inicio = 0;
     String [] proceso = new String[1000];
     int [] tiemp = new int[1000];
     int [] tamano = new int[1000];
     
-    /**
-     * Creates new form main
-     */
+   
     public main() {
         initComponents();
+        timer.start();
         modelo = new DefaultTableModel();
         modelo.addColumn("Proceso");
         modelo.addColumn("Tiempo");
@@ -42,8 +42,44 @@ public class main extends javax.swing.JFrame {
         hilo1.start();
     }
     
+    
+      
     Timer timer = new Timer(1000, (ActionEvent e) -> {
-        System.out.print(" hola");
+        if (cantidadprocesos != 0){
+            
+            if(inicio != cantidadprocesos){
+               
+               if(tiemp[inicio]>0){
+               tiemp[inicio] = tiemp[inicio] - 1;
+               }
+               
+               inicio = inicio + 1;
+            }else{
+               inicio = 0; 
+            }
+               
+            
+            modelo.getDataVector().removeAllElements();    
+            for(int i = 0; i <= ind-1; i = i + 1)
+            {
+                String [] info = new String[2];
+                info[0] =  proceso[i];
+                info[1] =  "" +tiemp[i];
+                
+                if(tiemp[i]>0){
+                modelo.addRow(info);
+                }
+                
+            }
+        }
+        
+            for(int i = 0; i <= cantidadprocesos; i = i + 1)
+            {
+                if( tiemp[i] == 0){                   
+                }
+            }
+        
+        
     });
     
     
@@ -237,22 +273,21 @@ public class main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (bandera == 1)
-        {   
-            bandera = 2;
-        }
-       timer.start();
-       String [] info = new String[2];
-       info[0] = "proceso "+ cont;
+       
+       
+       String a = "proceso "+ cont;      
        int numero = (int)(Math.random()*10+1);
-       info[1] =  " "+numero;
-       modelo.addRow(info);
+       
+       
        cont = cont +1; 
        
-       proceso[ind] = info[0];
+       proceso[ind] = a;
        tiemp[ind] = numero;
        tamano[ind] = 10;
+       
        ind = ind + 1;
+       cantidadprocesos = cantidadprocesos +1;
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
