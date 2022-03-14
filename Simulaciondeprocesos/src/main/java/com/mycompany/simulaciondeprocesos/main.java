@@ -6,6 +6,7 @@ package com.mycompany.simulaciondeprocesos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
@@ -18,16 +19,16 @@ import javax.swing.table.DefaultTableModel;
 public class main extends javax.swing.JFrame {
     Hilo1 hilo1;
     
+    Lista lista = new Lista();
+    
+    
     DefaultTableModel modelo;
     int cont =1;
     int bandera=1;
-    
     int ind =0; 
     int cantidadprocesos = 0;
     int inicio = 0;
-    String [] proceso = new String[1000];
-    int [] tiemp = new int[1000];
-    int [] tamano = new int[1000];
+   
     
    
     public main() {
@@ -47,37 +48,39 @@ public class main extends javax.swing.JFrame {
     Timer timer = new Timer(1000, (ActionEvent e) -> {
         if (cantidadprocesos != 0){
             
-            if(inicio != cantidadprocesos){
-               
-               if(tiemp[inicio]>0){
-               tiemp[inicio] = tiemp[inicio] - 1;
-               }
-               
-               inicio = inicio + 1;
-            }else{
-               inicio = 0; 
-            }
+          
                
             
             modelo.getDataVector().removeAllElements();    
-            for(int i = 0; i <= ind-1; i = i + 1)
-            {
-                String [] info = new String[2];
-                info[0] =  proceso[i];
-                info[1] =  "" +tiemp[i];
-                
-                if(tiemp[i]>0){
-                modelo.addRow(info);
-                }
-                
+            
+           
+            String [] nombre = new String[10000];
+            int [] tiempo = new int[10000];
+            
+            Object [] unidor = new Object[10000];
+            
+            
+            
+            nombre = lista.Listarb();
+            tiempo = lista.Listarc();
+            
+            
+            
+            for(int i = 0; i <= cantidadprocesos-1; i = i + 1)
+            {              
+                 unidor[0]=nombre[i];
+                 unidor[1]=tiempo[i];
+                 modelo.addRow(unidor);
             }
+            
+           
+            
+                
+                
+            
         }
         
-            for(int i = 0; i <= cantidadprocesos; i = i + 1)
-            {
-                if( tiemp[i] == 0){                   
-                }
-            }
+           
         
         
     });
@@ -277,29 +280,15 @@ public class main extends javax.swing.JFrame {
        
        String a = "proceso "+ cont;      
        int numero = (int)(Math.random()*10+1);
-       
-       
        cont = cont +1; 
-       
-       proceso[ind] = a;
-       tiemp[ind] = numero;
-       tamano[ind] = 10;
-       
-       ind = ind + 1;
+       lista.agregarAlFinal(ind, a, numero, numero);
+       ind = ind + 1;      
        cantidadprocesos = cantidadprocesos +1;
        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        for(int i = 0; i <= ind; i = i + 1)
-        {
-            System.out.println(proceso[i]);
-            System.out.println(tiemp[i]);
-            System.out.println(tamano[i]);
-            System.out.println("---------------------------------------------------------------------");
-            
-            
-        }
+       
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
