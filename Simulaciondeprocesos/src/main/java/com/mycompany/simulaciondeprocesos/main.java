@@ -9,7 +9,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author axelg
+ * @author pablo
  */
 public class main extends javax.swing.JFrame {
     DefaultTableModel modelo;
