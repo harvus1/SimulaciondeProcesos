@@ -4,18 +4,61 @@
  */
 package com.mycompany.simulaciondeprocesos;
 
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author axelg
  */
 public class main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form main
-     */
+    
+    Reloj horaActual = new Reloj();
+    
     public main() {
         initComponents();
+        horaActual.start();
     }
+    
+    
+    public class Reloj extends Thread{
+        
+        Calendar calendario;
+        
+         @Override
+        public void run() {
+            while (true) {
+                String horaSistema = "";
+                calendario = Calendar.getInstance();
+                if (calendario.get(Calendar.HOUR_OF_DAY)<10)
+                    horaSistema += String.valueOf("0"+calendario.get(Calendar.HOUR_OF_DAY)) + ":";
+                else
+                    horaSistema += String.valueOf(calendario.get(Calendar.HOUR_OF_DAY)) + ":";
+                if (calendario.get(Calendar.MINUTE)<10)
+                    horaSistema += String.valueOf("0"+calendario.get(Calendar.MINUTE)) + ":";
+                else
+                    horaSistema += String.valueOf(calendario.get(Calendar.MINUTE)) + ":";
+                if (calendario.get(Calendar.SECOND)<10)
+                    horaSistema += String.valueOf("0"+calendario.get(Calendar.SECOND)) + ":";
+                else
+                    horaSistema += String.valueOf(calendario.get(Calendar.SECOND)) + ":";
+                horaSistema += String.valueOf(calendario.get(Calendar.MILLISECOND)) + " hrs";
+                labelHoraSistema.setText(horaSistema);
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        
+        
+        
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -29,6 +72,7 @@ public class main extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        labelHoraSistema = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -50,7 +94,10 @@ public class main extends javax.swing.JFrame {
             .addGap(0, 247, Short.MAX_VALUE)
         );
 
-        jLabel3.setText("Hora del sistema");
+        labelHoraSistema.setText("Hora del sistema");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setText("HORA DEL SISTEMA");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -59,7 +106,7 @@ public class main extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(45, 45, 45)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 279, Short.MAX_VALUE)
                 .addComponent(jLabel2)
                 .addGap(175, 175, 175))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -69,8 +116,11 @@ public class main extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(labelHoraSistema)
+                        .addGap(133, 133, 133))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(187, 187, 187))))
+                        .addGap(59, 59, 59))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,9 +131,11 @@ public class main extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(41, 41, 41)
                 .addComponent(jLabel3)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(labelHoraSistema)
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         pack();
@@ -129,5 +181,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel labelHoraSistema;
     // End of variables declaration//GEN-END:variables
 }
