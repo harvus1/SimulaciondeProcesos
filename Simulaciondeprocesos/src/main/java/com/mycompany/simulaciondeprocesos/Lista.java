@@ -7,7 +7,7 @@ package com.mycompany.simulaciondeprocesos;
 
 /**
  *
- * @author Pablo García
+ * @author  
  */
 public class Lista {
     
@@ -162,14 +162,30 @@ public class Lista {
             int i = 0;
             
             while (aux != null){
-                System.out.println(i + ".[" + aux.getId() + aux.getNombre() + aux.getTamaño() + aux.getTiempo() + "]" + " ->");
+                System.out.println("id: " + aux.getId() +" "+ aux.getNombre() +" tiempo: "+ aux.getTiempo());
                 aux = aux.getSiguiente();
                 i++;
             }
         }
+        System.out.println("-------------------------------------------------------------------------------------");
     }
     
-     public String [] Listarb(){
+    public void restar1(int posicion)
+    {
+        if(posicion >= 0 && posicion < tamanio){
+            if(posicion == 0){
+                inicio.setTiempo(inicio.getTiempo()-1);
+            } else {
+                Nodo aux = inicio;
+                for (int i = 0; i < posicion; i++){
+                    aux = aux.getSiguiente();
+                }
+                aux.setTiempo(aux.getTiempo()-1);
+            }
+        }
+    }
+    
+    public String [] Listarb(){
         String [] info = new String[1000];
 
         if(!esVacia()){
@@ -186,8 +202,8 @@ public class Lista {
         return info;
     }
      
-       public int [] Listarc(){
-        int [] info = new int[10000];
+    public int [] Listarc(){
+    int [] info = new int[10000];
 
         if(!esVacia()){
             Nodo aux = inicio;
@@ -202,8 +218,37 @@ public class Lista {
         
         return info;
     }
+    
+    
+     public int Tamañolimite(){
+        int total=0;
+        if(!esVacia()){
+            Nodo aux = inicio;
+            int i = 0;
+            
+            while (aux != null){
+                total = total + aux.getTamaño();
+                aux = aux.getSiguiente();
+                i++;
+            }
+        }
+        return total;
+    }
+    
+    
+   
+    
+     
+}
        
     
-}
+    
+    
+   
+       
+    
+       
+    
+
                
             
