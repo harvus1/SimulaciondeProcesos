@@ -52,12 +52,7 @@ public class main extends javax.swing.JFrame implements Runnable {
       
     Timer timer = new Timer(1000, (ActionEvent e) -> {
         if(lista.getTamanio() >0){
-             
-            
-             
-            
-            
-            
+ 
              modelo.getDataVector().removeAllElements();    
             
            
@@ -103,8 +98,8 @@ public class main extends javax.swing.JFrame implements Runnable {
         
     }
               
-        @Override
-        public void run() {
+    @Override
+    public void run() {
         Thread currentTime = Thread.currentThread();
         while (currentTime == h1) {
             calcula();
@@ -119,7 +114,7 @@ public class main extends javax.swing.JFrame implements Runnable {
         }
     }
         
-         private void calcula() {
+    private void calcula() {
         Calendar calendario = new GregorianCalendar();
         Date fechaHoraActual = new Date();
 
