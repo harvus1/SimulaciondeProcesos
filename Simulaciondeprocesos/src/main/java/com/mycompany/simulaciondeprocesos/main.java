@@ -7,6 +7,9 @@ package com.mycompany.simulaciondeprocesos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -17,21 +20,23 @@ import javax.swing.table.DefaultTableModel;
 /**
  *
  */
-public class main extends javax.swing.JFrame {
+public class main extends javax.swing.JFrame implements Runnable {
     Hilo1 hilo1;
     
     Lista lista = new Lista();
     
     DefaultTableModel modelo;
-    
-   
-    
+    String hora, minutos, segundos, ampm;
+    Calendar calendario;
+    Thread h1;
     int restar1=0;
     int tamañomemoria=100;
     
    
     public main() {
         initComponents();
+        h1 = new Thread((Runnable) this);
+        h1.start();
         timer.start();
         modelo = new DefaultTableModel();
         modelo.addColumn("Proceso");
@@ -83,28 +88,57 @@ public class main extends javax.swing.JFrame {
             {
                 restar1 = 0;
             }
-            
-            
-            
-            
+  
          }
         
     });
-    
-    
+
+   
     
     
      // Creamos el hilo1
     public class Hilo1 extends Thread {
-       
-       
-        @Override
-        public void run(){
-            
-        }
+      
 
         
     }
+              
+        @Override
+        public void run() {
+        Thread currentTime = Thread.currentThread();
+        while (currentTime == h1) {
+            calcula();
+            lblHora.setText(hora + ":" + minutos + ":" + segundos + " " + ampm);
+            System.out.println("Iniciar hora");
+            try {
+                Thread.sleep(1000);
+
+            } catch (InterruptedException ex) {
+                Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+        
+         private void calcula() {
+        Calendar calendario = new GregorianCalendar();
+        Date fechaHoraActual = new Date();
+
+        calendario.setTime(fechaHoraActual);
+        ampm = calendario.get(Calendar.AM_PM) == Calendar.AM ? "AM" : "PM";
+        if (ampm.equals("PM")) {
+            int h = calendario.get(Calendar.HOUR_OF_DAY) - 12;
+            hora = h > 9 ? "" + h : "0" + h;
+
+        } else {
+            hora = calendario.get(Calendar.HOUR_OF_DAY) > 9 ? "" + calendario.get(Calendar.HOUR_OF_DAY) : "0" + calendario.get(Calendar.HOUR_OF_DAY);
+        }
+        minutos = calendario.get(Calendar.MINUTE) > 9 ? "" + calendario.get(Calendar.MINUTE) : "0" + calendario.get(Calendar.MINUTE);
+        segundos = calendario.get(Calendar.SECOND) > 9 ? "" + calendario.get(Calendar.SECOND) : "0" + calendario.get(Calendar.SECOND);
+    }
+
+        
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -128,6 +162,7 @@ public class main extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
+        lblHora = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -236,8 +271,10 @@ public class main extends javax.swing.JFrame {
                                 .addGap(53, 53, 53)
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel3)
-                                .addGap(163, 163, 163)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(139, 139, 139)))
                         .addGap(471, 471, 471))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -281,6 +318,8 @@ public class main extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
         );
 
@@ -359,5 +398,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblHora;
     // End of variables declaration//GEN-END:variables
 }
