@@ -113,7 +113,7 @@ public class main extends javax.swing.JFrame implements Runnable {
             }
         }
     }
-        
+
     private void calcula() {
         Calendar calendario = new GregorianCalendar();
         Date fechaHoraActual = new Date();
@@ -147,6 +147,9 @@ public class main extends javax.swing.JFrame implements Runnable {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        txthisto = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -167,15 +170,39 @@ public class main extends javax.swing.JFrame implements Runnable {
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
+        jTextField1.setText("Historial");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        txthisto.setEditable(false);
+        txthisto.setColumns(20);
+        txthisto.setLineWrap(true);
+        txthisto.setRows(5);
+        txthisto.setWrapStyleWord(true);
+        jScrollPane2.setViewportView(txthisto);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 478, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(140, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(115, 115, 115))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 439, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(278, 278, 278)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
         );
 
         jLabel3.setText("Hora del sistema");
@@ -320,20 +347,22 @@ public class main extends javax.swing.JFrame implements Runnable {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    String historial = "";
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int a = 0;
         a = lista.Tamañolimite();
         
         if(a<100){
-        lista.agregarAlFinal(lista.getTamanio(), "proceso "+ lista.getTamanio(), (int) (Math.random()*9 + 1),(int) (Math.random()*9 + 1));    
+        lista.agregarAlFinal(lista.getTamanio(), "proceso "+ lista.getTamanio(), (int) (Math.random()*9 + 1),(int) (Math.random()*9 + 1));
+        historial += "Proceso " + lista.getTamanio() + "  creado a las "+ lblHora.getText() + "\n";
+        txthisto.setText(historial);
+        
         }else{
              JOptionPane.showMessageDialog(null, "No queda espacio espera a que los procesos sean terminados");
              
         }
         
-            
-
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -343,6 +372,10 @@ public class main extends javax.swing.JFrame implements Runnable {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
       
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -392,7 +425,10 @@ public class main extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel lblHora;
+    private javax.swing.JTextArea txthisto;
     // End of variables declaration//GEN-END:variables
 }
