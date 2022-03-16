@@ -170,6 +170,7 @@ public class Lista {
         System.out.println("-------------------------------------------------------------------------------------");
     }
     
+    
     public void restar1(int posicion)
     {
         if(posicion >= 0 && posicion < tamanio){
@@ -184,6 +185,28 @@ public class Lista {
             }
         }
     }
+    
+    
+     public String nombre(int posicion)
+    {
+        String a = "";
+        if(posicion >= 0 && posicion < tamanio){
+            if(posicion == 0){
+                inicio.setTiempo(inicio.getTiempo()-1);
+                a= inicio.getNombre();
+            } else {
+                Nodo aux = inicio;
+                for (int i = 0; i < posicion; i++){
+                    aux = aux.getSiguiente();
+                }
+                aux.setTiempo(aux.getTiempo()-1);
+                a= aux.getNombre();
+            }
+        }
+         return a;       
+    }
+    
+    
     
     public String [] Listarb(){
         String [] info = new String[1000];
