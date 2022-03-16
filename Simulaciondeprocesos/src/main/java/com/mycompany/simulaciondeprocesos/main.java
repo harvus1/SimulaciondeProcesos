@@ -24,14 +24,15 @@ public class main extends javax.swing.JFrame implements Runnable {
     Hilo1 hilo1;
     
     Lista lista = new Lista();
-    
+    Nodo nodo = new Nodo();
     DefaultTableModel modelo;
     String hora, minutos, segundos, ampm;
     Calendar calendario;
     Thread h1;
     int restar1=0;
     int tamañomemoria=100;
-    
+    private int contadorP = 0;
+
    
     public main() {
         initComponents();
@@ -355,8 +356,9 @@ public class main extends javax.swing.JFrame implements Runnable {
         
         if(a<100){
         lista.agregarAlFinal(lista.getTamanio(), "proceso "+ lista.getTamanio(), (int) (Math.random()*9 + 1),(int) (Math.random()*9 + 1));
-        historial += "Proceso " + lista.getTamanio() + "  creado a las "+ lblHora.getText() + "\n";
+        historial += "P" + this.contadorP + "  creado a las "+ lblHora.getText() + "\n";
         txthisto.setText(historial);
+        contadorP++;
         
         }else{
              JOptionPane.showMessageDialog(null, "No queda espacio espera a que los procesos sean terminados");
