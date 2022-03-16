@@ -44,10 +44,6 @@ public class main extends javax.swing.JFrame {
     }
     
     
-      
-    
-    
-    
     Timer timer = new Timer(1000, (ActionEvent e) -> {
         if(lista.getTamanio() >0){
                               
@@ -373,9 +369,7 @@ public class main extends javax.swing.JFrame {
         }else{
              JOptionPane.showMessageDialog(null, "No queda espacio espera a que los procesos sean terminados");
              
-        }
-        
-            
+        }    
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
