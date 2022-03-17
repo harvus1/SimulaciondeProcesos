@@ -29,6 +29,7 @@ public class main extends javax.swing.JFrame implements Runnable {
     String hora, minutos, segundos, ampm;
     Calendar calendario;
     Thread h1;
+    Robin RR = new Robin();
     int restar1=0;
     int tamañomemoria=100;
     private int contadorP = 0;
@@ -43,33 +44,37 @@ public class main extends javax.swing.JFrame implements Runnable {
         initComponents();
         h1 = new Thread((Runnable) this);
         h1.start();
-        timer.start();
+       // timer.start();
         modelo = new DefaultTableModel();
         modelo.addColumn("Proceso");
         modelo.addColumn("Tiempo");
-        
+        RR.start();
         this.jTable1.setModel(modelo);
         
     }
     
-    
-      
-    Timer timer = new Timer(1000, (ActionEvent e) -> {
-        
-        
-        if(lista.getTamanio() >0){
- 
-            
-            modelo.getDataVector().removeAllElements();    
-            
-           
+    public class Robin extends Thread
+    {
+      @Override
+      public void run()
+      {
+       Nodo EnCurso = null;
+       boolean First;
+      while(true)
+      {
+        modelo.getDataVector().removeAllElements();    
+
+      if(lista.getTamanio() >0){
+          First = false;
+   
+          if(EnCurso==null)
+                {
+                    EnCurso = lista.getInicio();
+                    First = true;
+                }
             String [] nombre = new String[10000];
             int [] tiempo = new int[10000];
-            
             Object [] unidor = new Object[10000];
-            
-            
-            
             nombre = lista.Listarb();
             tiempo = lista.Listarc();
             
@@ -81,31 +86,94 @@ public class main extends javax.swing.JFrame implements Runnable {
                  unidor[1]=tiempo[i];
                  modelo.addRow(unidor);
             }
-            
-            
-            if(restar1 < lista.getTamanio()){
-                
-                lista.restar1(restar1); 
-                
-                nombrev = lista.nombrev(restar1);
-                tamañoi = lista.tamañoi(restar1);
-                tamañof = lista.tamañof(restar1);
-                tiempov = lista.tiempo(restar1);
-                 
-                restar1 = restar1 + 1;
-                
-                
-                
-                
+          
+                nombrev = EnCurso.getNombre();
+                tamañoi = EnCurso.getTamaño();
+                tamañof = EnCurso.getTamaño();
+                tiempov = EnCurso.getTiempo();
                 tabla(tamañoi,tamañof, tiempov, nombrev);
                 
-            }else
-            {
-                restar1 = 0;
-            }
+                EnCurso.setTiempo(EnCurso.getTiempo()-1);
+                                          try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if(EnCurso.getTiempo()<=0)
+                {
+                    if(First)
+                    {
+                     lista.setInicio(EnCurso.getSiguiente());
+                    }
+                    else
+                    {
+                    EnCurso.getAnterior().setSiguiente(EnCurso.getSiguiente());
+                    }
+                    lista.CambiarTamanio(); 
+                    historial += EnCurso.getNombre() + "  finalizado a las "+ lblHora.getText() + "\n";
+                        txthisto.setText(historial);
+
+                }
+                EnCurso = EnCurso.getSiguiente();
+      }
   
-         }
-    });
+
+      }
+      }
+            }
+      
+//    Timer timer = new Timer(1000, (ActionEvent e) -> {
+//        
+//        
+//        if(lista.getTamanio() >0){
+// 
+//            
+//            modelo.getDataVector().removeAllElements();    
+//            
+//           
+//            String [] nombre = new String[10000];
+//            int [] tiempo = new int[10000];
+//            
+//            Object [] unidor = new Object[10000];
+//            
+//            
+//            
+//            nombre = lista.Listarb();
+//            tiempo = lista.Listarc();
+//            
+//            
+//            
+//            for(int i = 0; i <= lista.getTamanio()-1; i = i + 1)
+//            {              
+//                 unidor[0]=nombre[i];
+//                 unidor[1]=tiempo[i];
+//                 modelo.addRow(unidor);
+//            }
+//            
+//            
+//            if(restar1 < lista.getTamanio()){
+//                
+//                lista.restar1(restar1); 
+//                
+//                nombrev = lista.nombrev(restar1);
+//                tamañoi = lista.tamañoi(restar1);
+//                tamañof = lista.tamañof(restar1);
+//                tiempov = lista.tiempo(restar1);
+//                 
+//                restar1 = restar1 + 1;
+//                
+//                
+//                
+//                
+//                tabla(tamañoi,tamañof, tiempov, nombrev);
+//                
+//            }else
+//            {
+//                restar1 = 0;
+//            }
+//  
+//         }
+//    });
 
    
      
@@ -418,7 +486,8 @@ public class main extends javax.swing.JFrame implements Runnable {
         a = lista.Tamañolimite();
         
         if(a<100){
-        lista.agregarAlFinal(lista.getTamanio(), "proceso "+ lista.getTamanio(), (int) (Math.random()*9 + 1),(int) (Math.random()*9 + 1));
+//        lista.agregarAlFinal(lista.getId_next(), "Proceso " + lista.getId_next(), (int) (Math.random()*9 + 1),(int) (Math.random()*9 + 1));
+        lista.agregarAlFinal(lista.getId_next(), "Proceso " + lista.getId_next(), (int) (Math.random()*9 + 1),(int) (Math.random()*10 + 5));
         historial += "P" + this.contadorP + "  creado a las "+ lblHora.getText() + "\n";
         txthisto.setText(historial);
         contadorP++;

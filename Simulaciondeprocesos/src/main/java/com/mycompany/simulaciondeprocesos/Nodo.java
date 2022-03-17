@@ -16,7 +16,7 @@ public class Nodo {
     private int tiempo;
     
     private Nodo siguiente; 
-    
+    private Nodo anterior;
     
     public void Nodo(){
     this.id = 0;
@@ -36,6 +36,14 @@ public class Nodo {
         this.siguiente = siguiente;
     }
 
+        public Nodo getAnterior() {
+        return anterior;
+    }
+    
+    public void setAnterior(Nodo anterior) {
+        this.anterior = anterior;
+    }
+    
     public int getId() {
         return id;
     }
