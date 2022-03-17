@@ -172,18 +172,100 @@ public class Lista {
     
     public void restar1(int posicion)
     {
+     
         if(posicion >= 0 && posicion < tamanio){
             if(posicion == 0){
                 inicio.setTiempo(inicio.getTiempo()-1);
+               
             } else {
                 Nodo aux = inicio;
                 for (int i = 0; i < posicion; i++){
                     aux = aux.getSiguiente();
                 }
                 aux.setTiempo(aux.getTiempo()-1);
+             
             }
         }
+        
     }
+    
+     public String nombrev(int posicion)
+    {
+        String a="";
+        if(posicion >= 0 && posicion < tamanio){
+            if(posicion == 0){
+                a= inicio.getNombre();
+            } else {
+                Nodo aux = inicio;
+                for (int i = 0; i < posicion; i++){
+                    
+                    aux = aux.getSiguiente();
+                }
+              a = aux.getNombre();
+            }
+        }
+        return a;
+    }
+    
+  
+    
+    
+    public int tiempo(int posicion)
+    {
+        int a=0;
+        if(posicion >= 0 && posicion < tamanio){
+            if(posicion == 0){
+                a= inicio.getTiempo();
+            } else {
+                Nodo aux = inicio;
+                for (int i = 0; i < posicion; i++){
+                    aux = aux.getSiguiente();
+                }
+                a =aux.getTiempo();
+            }
+        }
+        return a;
+    }
+    
+    public int tamañof(int posicion)
+    {
+        int a=0;
+        if(posicion >= 0 && posicion < tamanio){
+            if(posicion == 0){
+                
+                a= inicio.getTamaño();
+            } else {
+                Nodo aux = inicio;
+                for (int i = 0; i < posicion; i++){
+                    a = a + aux.getTamaño();
+                    aux = aux.getSiguiente();
+                }
+                
+            }
+        }
+        return a;
+    }
+    
+    public int tamañoi(int posicion)
+    {
+        int a=0;
+        if(posicion >= 0 && posicion < tamanio){
+            if(posicion == 0){
+                a= 0;
+            } else {
+                Nodo aux = inicio;
+                for (int i = 0; i < posicion; i++){
+                    aux = aux.getSiguiente();
+                    a = a + aux.getTamaño();
+                }
+                
+            }
+        }
+        return a;
+    }
+    
+    
+   
     
     public String [] Listarb(){
         String [] info = new String[1000];
