@@ -14,7 +14,9 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -39,8 +41,7 @@ public class main extends javax.swing.JFrame implements Runnable {
     int tamañof=0;
     int tiempov=0;
     String nombrev="";
-    String ti = "";
-    String tf ="";
+   
 
    
     public main() {
@@ -65,7 +66,9 @@ public class main extends javax.swing.JFrame implements Runnable {
        boolean First;
       while(true)
       {
-          
+        DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+        tcr.setHorizontalAlignment(SwingConstants.CENTER);
+   
         modelo.getDataVector().removeAllElements();    
 
       if(lista.getTamanio() >0){
@@ -91,17 +94,12 @@ public class main extends javax.swing.JFrame implements Runnable {
                  unidor[1]=tiempo[i];
                  modelo.addRow(unidor);
             }
-                //String hexadecimal = Integer.toHexString(tamañof);
-                //hexadecimal = decimalAHexadecimal(tamañof);
-                
                 nombrev = EnCurso.getNombre();
-                tamañoi = EnCurso.getTamaño();
-                ti = EnCurso.Hexadecimales(tamañoi);
+                tamañoi = EnCurso.getTamaño();   
                 tamañof = EnCurso.getTamaño();
-                tf = EnCurso.Hexadecimales(tamañof);
                 tiempov = EnCurso.getTiempo();
                
-                tabla(ti,tf, tiempov, nombrev);
+                tabla(tamañoi,tamañof, tiempov, nombrev);
                 
                 EnCurso.setTiempo(EnCurso.getTiempo()-1);
                                           try {
@@ -133,6 +131,18 @@ public class main extends javax.swing.JFrame implements Runnable {
       }
       }
             }
+    
+    
+     public static String Hexadecimales(int decimal) {
+        String hexadecimal = "";
+        String caracteresHexadecimales = "0123456789abcdef";
+        while (decimal > 0) {
+            int residuo = decimal % 16;
+            hexadecimal = caracteresHexadecimales.charAt(residuo) + hexadecimal; // Agregar a la izquierda
+            decimal /= 16;
+        }
+        return hexadecimal;
+    }
       
 //    Timer timer = new Timer(1000, (ActionEvent e) -> {
 //        
@@ -191,10 +201,20 @@ public class main extends javax.swing.JFrame implements Runnable {
      
   
     
-    private void tabla(String ti, String tf, int tiempov, String nombrev) {
+    private void tabla(int tamañoi, int tamañof, int tiempov, String nombrev) {
+        Nodo nodo = null;
         jLabel6.setText(nombrev);
-        jLabel11.setText(""+tiempov);
+        //contador
+        String tv = Integer.toHexString(tiempov);
+        tv = Hexadecimales(tiempov);
+        jLabel11.setText(tv);
+        //tamaño inicial
+        String ti = Integer.toHexString(tamañoi);
+        ti = Hexadecimales(tamañoi);
         jLabel12.setText(ti);
+        //tamaño final
+        String tf = Integer.toHexString(tamañof);
+        tf = Hexadecimales(tamañof);
         jLabel13.setText(tf);
     }
    
@@ -329,9 +349,7 @@ public class main extends javax.swing.JFrame implements Runnable {
                         .addGap(0, 14, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(138, 138, 138))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(174, 174, 174)
@@ -349,6 +367,10 @@ public class main extends javax.swing.JFrame implements Runnable {
                             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(114, 114, 114))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(123, 123, 123))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -359,15 +381,15 @@ public class main extends javax.swing.JFrame implements Runnable {
                 .addComponent(jLabel6)
                 .addGap(29, 29, 29)
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel11)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
+                        .addGap(87, 87, 87)
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel12)
                         .addGap(14, 14, 14)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)

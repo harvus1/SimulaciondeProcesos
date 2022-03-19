@@ -77,46 +77,6 @@ public class Nodo {
     public void setTiempo(int tiempo) {
         this.tiempo = tiempo;
     }
-    
-    public String Hexadecimales(int decimal) {
-        //Scanner teclado = new Scanner(System.in);
-        //teclado.close();
-        char digitosH[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
-        String hexadecimal2 = "";
-        int resto, aux = decimal;
-        while (aux > 0) {
-            resto = aux % 16;
-            hexadecimal2 = digitosH[resto] + hexadecimal2;
-            aux /= 16;
-        }
-        System.out.printf("%n%nMétodo 2 -> Decimal: %d, Hexadecimal: %sh", decimal, hexadecimal2, "h");
-        return hexadecimal2 + "h";
-    }
-    
-////        public String Hexadecimales(int decimal) {
-////        String hexadecimal = Integer.toHexString(decimal);
-////        return hexadecimal+"h";
-////    }
-    
-    
-     
-//     public static String Hexadecimales(int decimal) {
-//        String hexadecimal = "";
-//        String caracteresHexadecimales = "0123456789abcdef";
-//        while (decimal > 0) {
-//            int residuo = decimal % 16;
-//            hexadecimal = caracteresHexadecimales.charAt(residuo) + hexadecimal; // Agregar a la izquierda
-//            decimal /= 16;
-//        }
-//        return hexadecimal;
-//    }
-    
-    
-    
-
-    
-    
-    
-    
+        
 }
 
