@@ -7,61 +7,58 @@ package com.mycompany.simulaciondeprocesos;
 
 /**
  *
- * @author  
+ * @author
  */
 public class Lista {
-    
+
     private Nodo inicio;
     private int tamanio;
     private int id_next;
-    
-    public void Lista(){
+
+    public void Lista() {
         inicio = null;
         tamanio = 0;
-        id_next=0;
+        id_next = 0;
     }
-    
-    public Nodo getInicio()
-    {
+
+    public Nodo getInicio() {
         return inicio;
     }
-    
-   public void setInicio(Nodo head)
-    {
+
+    public void setInicio(Nodo head) {
         inicio = head;
     }
-   
-   public void CambiarTamanio()
-   {
-       tamanio--;
-   }
-   
-    public boolean esVacia(){
+
+    public void CambiarTamanio() {
+        tamanio--;
+    }
+
+    public boolean esVacia() {
         return inicio == null;
     }
-    
-    public int getId_next()
-    {
+
+    public int getId_next() {
         return id_next;
     }
-    
-    public int getTamanio(){
+
+    public int getTamanio() {
         return tamanio;
     }
-    
-    public void agregarAlFinal(int id, String nombre, int tamaño, int tiempo){
+
+    public void agregarAlFinal(int id, String nombre, int base, int tiempo) {
         Nodo nodo = new Nodo();
         nodo.setId(id);
         nodo.setNombre(nombre);
-        nodo.setTamaño(tamaño);
+        nodo.setBase(base);
         nodo.setTiempo(tiempo);
-        
-        if (esVacia()){
+        nodo.setLimite();  //Se setea con BASE Y TIEMPO
+
+        if (esVacia()) {
             inicio = nodo;
             inicio.setAnterior(null);
-        }else{
+        } else {
             Nodo aux = inicio;
-            while(aux.getSiguiente() != null){
+            while (aux.getSiguiente() != null) {
                 aux = aux.getSiguiente();
             }
             nodo.setAnterior(aux);
@@ -70,322 +67,79 @@ public class Lista {
         tamanio++;
         id_next++;
     }
-    
-    public int getValor(int posicion)throws Exception{
-        if (posicion >=0  && posicion < tamanio ){
-            if(posicion == 0){
-                return inicio.getId();
-            } else{
-                Nodo aux = inicio;
-                for (int i = 0; i < posicion; i++){
-                    aux = aux.getSiguiente();
-                }
-                
-                return aux.getId();
-            }
-        } else {
-            throw new Exception("Posicion Inexistente en la Lista");
-        }
-    }
-    
-    public boolean buscar(int referencia){
-        Nodo aux = inicio;
-        boolean encontrado = false;
-        while (aux != null && encontrado != true){
-            if (referencia == aux.getId()){
-                encontrado = true;
-            } else {
-                aux = aux.getSiguiente();
-            }
-        }
-        return encontrado;
-    }
-    
-    public int getPosicion(int referencia) throws Exception{
-        if (buscar(referencia)){
-            Nodo aux = inicio;
-            int cont = 0;
-            
-            while (referencia != aux.getId()){
-                cont ++;
-                aux = aux.getSiguiente();
-            }
-            return cont;
-        } else{
-            throw new Exception("Valor Inexistente en la Lista");
-        }
-    }
-    
-    public void editarPorReferencia(int referencia, int valor){
-        if(buscar(referencia)){
-            Nodo aux = inicio;
-            while (aux.getId() != referencia){
-                aux = aux.getSiguiente();
-            }
-            aux.setId(valor);
-        }
-    }
-    
-    public void editarPorPosicion(int posicion, int valor){
-        if(posicion >= 0 && posicion < tamanio){
-            if(posicion == 0){
-                inicio.setId(valor);
-            } else {
-                Nodo aux = inicio;
-                for (int i = 0; i < posicion; i++){
-                    aux = aux.getSiguiente();
-                }
-                aux.setId(valor);
-            }
-        }
-    }
-    
-    public void removerPorReferencia(int referencia){
-        if(buscar(referencia)){
-            if(inicio.getId() == referencia){
-                inicio = inicio.getSiguiente();
-            } else{
-                Nodo aux = inicio;
-                while (aux.getSiguiente().getId() != referencia){
-                    aux = aux.getSiguiente();
-                }
-                
-                Nodo siguiente = aux.getSiguiente().getSiguiente();
-                aux.setSiguiente(siguiente);
-            }
-            tamanio--;
-        }
-    }
-    
-    
-    public Nodo RemoverPorId(int id_del)
-    {
-        Nodo aux= inicio;
-        if(tamanio>0)
-        {
-            if(aux.getId()== id_del)
-            {
-                inicio = inicio.getSiguiente();
-            }
-            else
-            {
-             while(id_del != aux.getSiguiente().getId())       
-             {
-                 aux = aux.getSiguiente();
-             }   
-                 aux.setSiguiente(aux.getSiguiente().getSiguiente());
-                 }
-            tamanio--;
-        }
-        return aux;
-    }
-    
-    
-    
-    public void removerPorPosicion(int posicion){
-        if(posicion >= 0 && posicion < tamanio){
-            if (posicion == 0){
-                inicio = inicio.getSiguiente();
-            } else {
-                Nodo aux = inicio;
-                
-                for (int i = 0; i < posicion-1; i++){
-                 aux = aux.getSiguiente();
-                }
-                
-                Nodo siguiente = aux.getSiguiente();
-                aux.setSiguiente(siguiente.getSiguiente());
-            }
-            tamanio--;
-        }
-    }
-    
-    public void eliminar(){
-        inicio = null;
-        tamanio = 0;
-    }
-    
-    public void Listar(){
-        if(!esVacia()){
-            Nodo aux = inicio;
-            int i = 0;
-            
-            while (aux != null){
-                System.out.println("id: " + aux.getId() +" "+ aux.getNombre() +" tiempo: "+ aux.getTiempo());
-                aux = aux.getSiguiente();
-                i++;
-            }
-        }
-        System.out.println("-------------------------------------------------------------------------------------");
-    }
-    
-    public boolean restar1(int posicion)
-    {
+
+    public boolean restar1(int posicion) {
         boolean zero = false;
-        if(posicion >= 0 && posicion < tamanio){
-            if(posicion == 0){
-                inicio.setTiempo(inicio.getTiempo()-1);
-                if(inicio.getTiempo()==0)
-                {
+        if (posicion >= 0 && posicion < tamanio) {
+            if (posicion == 0) {
+                inicio.setTiempo(inicio.getTiempo() - 1);
+                if (inicio.getTiempo() == 0) {
                     zero = true;
                 }
             } else {
                 Nodo aux = inicio;
-                for (int i = 0; i < posicion; i++){
+                for (int i = 0; i < posicion; i++) {
                     aux = aux.getSiguiente();
                 }
-                aux.setTiempo(aux.getTiempo()-1);
-                if(aux.getTiempo()==0)
-                {
+                aux.setTiempo(aux.getTiempo() - 1);
+                if (aux.getTiempo() == 0) {
                     zero = true;
                 }
             }
         }
         return zero;
     }
-    
-     public String nombrev(int posicion)
-    {
-        String a="";
-        if(posicion >= 0 && posicion < tamanio){
-            if(posicion == 0){
-                a= inicio.getNombre();
-            } else {
-                Nodo aux = inicio;
-                for (int i = 0; i < posicion; i++){
-                    
-                    aux = aux.getSiguiente();
-                }
-              a = aux.getNombre();
-            }
-        }
-        return a;
-    }
-    
-  
-    
-    
-    public int tiempo(int posicion)
-    {
-        int a=0;
-        if(posicion >= 0 && posicion < tamanio){
-            if(posicion == 0){
-                a= inicio.getTiempo();
-            } else {
-                Nodo aux = inicio;
-                for (int i = 0; i < posicion; i++){
-                    aux = aux.getSiguiente();
-                }
-                a =aux.getTiempo();
-            }
-        }
-        return a;
-    }
-    
-    public int tamañof(int posicion)
-    {
-        int a=0;
-        if(posicion >= 0 && posicion < tamanio){
-            if(posicion == 0){
-                
-                a= inicio.getTamaño();
-            } else {
-                Nodo aux = inicio;
-                for (int i = 0; i < posicion; i++){
-                    a = a + aux.getTamaño();
-                    aux = aux.getSiguiente();
-                }
-                
-            }
-        }
-        return a;
-    }
-    
-    public int tamañoi(int posicion)
-    {
-        int a=0;
-        if(posicion >= 0 && posicion < tamanio){
-            if(posicion == 0){
-                a= 0;
-            } else {
-                Nodo aux = inicio;
-                for (int i = 0; i < posicion; i++){
-                    aux = aux.getSiguiente();
-                    a = a + aux.getTamaño();
-                }
-                
-            }
-        }
-        return a;
-    }
-    
-    
-   
-    
-    public String [] Listarb(){
-        String [] info = new String[1000];
 
-        if(!esVacia()){
+//     public String nombrev(int posicion)
+//    {
+//        String a="";
+//        if(posicion >= 0 && posicion < tamanio){
+//            if(posicion == 0){
+//                a= inicio.getNombre();
+//            } else {
+//                Nodo aux = inicio;
+//                for (int i = 0; i < posicion; i++){
+//                    
+//                    aux = aux.getSiguiente();
+//                }
+//              a = aux.getNombre();
+//            }
+//        }
+//        return a;
+//    }
+//    
+    public String[] Listarb() {
+        String[] info = new String[1000];
+
+        if (!esVacia()) {
             Nodo aux = inicio;
             int i = 0;
-            
-            while (aux != null){
-                info[i]= aux.getNombre();
+
+            while (aux != null) {
+                info[i] = aux.getNombre();
                 aux = aux.getSiguiente();
                 i++;
             }
         }
-        
+
         return info;
     }
-     
-    public int [] Listarc(){
-    int [] info = new int[10000];
 
-        if(!esVacia()){
+    public int[] Listarc() {
+        int[] info = new int[10000];
+
+        if (!esVacia()) {
             Nodo aux = inicio;
             int i = 0;
-            
-            while (aux != null){
-                info[i]= aux.getTiempo();
+
+            while (aux != null) {
+                info[i] = aux.getTiempo();
                 aux = aux.getSiguiente();
                 i++;
             }
         }
-        
+
         return info;
     }
-    
-    
-     public int Tamañolimite(){
-        int total=0;
-        if(!esVacia()){
-            Nodo aux = inicio;
-            int i = 0;
-            
-            while (aux != null){
-                total = total + aux.getTamaño();
-                aux = aux.getSiguiente();
-                i++;
-            }
-        }
-        return total;
-    }
-    
-    
-   
-    
-     
+
 }
-       
-    
-    
-    
-   
-       
-    
-       
-    
-
-               
-            

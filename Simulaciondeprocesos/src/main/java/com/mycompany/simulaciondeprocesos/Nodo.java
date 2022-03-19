@@ -9,41 +9,46 @@ package com.mycompany.simulaciondeprocesos;
  *
  * @author Pablo García
  */
+
+//Nodo => Proceso Class
 public class Nodo {
+
+    //Propieades de los Procesos
     private int id;
     private String nombre;
-    private int tamaño;
+    private int base;
+    private int limite;
     private int tiempo;
-    
-    private Nodo siguiente; 
+
+    //Punteros de los Procesos
+    private Nodo siguiente;
     private Nodo anterior;
-    
-    public void Nodo(){
-    this.id = 0;
-    this.nombre = "";
-    this.tamaño = 0;
-    this.tiempo = 0;
-    
-    this.siguiente = null;
+
+    public void Nodo() {
+        this.id = 0;
+        this.nombre = "";
+        this.base = 0;
+        this.limite = 0;
+        this.tiempo = 0;
+        this.siguiente = null;
     }
 
-   
     public Nodo getSiguiente() {
         return siguiente;
     }
-    
+
     public void setSiguiente(Nodo siguiente) {
         this.siguiente = siguiente;
     }
 
-        public Nodo getAnterior() {
+    public Nodo getAnterior() {
         return anterior;
     }
-    
+
     public void setAnterior(Nodo anterior) {
         this.anterior = anterior;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -60,12 +65,20 @@ public class Nodo {
         this.nombre = nombre;
     }
 
-    public int getTamaño() {
-        return tamaño;
+    public int getBase() {
+        return base;
     }
 
-    public void setTamaño(int tamaño) {
-        this.tamaño = tamaño;
+    public void setBase(int base) {
+        this.base = base;
+    }
+
+    public int getLimite() {
+        return limite;
+    }
+
+    public void setLimite() {
+        this.limite = this.base - this.tiempo +1;
     }
 
     public int getTiempo() {
@@ -75,9 +88,4 @@ public class Nodo {
     public void setTiempo(int tiempo) {
         this.tiempo = tiempo;
     }
-    
-    
-    
-    
 }
-
