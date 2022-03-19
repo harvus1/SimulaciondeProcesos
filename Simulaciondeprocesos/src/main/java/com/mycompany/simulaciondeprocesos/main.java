@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -38,6 +39,8 @@ public class main extends javax.swing.JFrame implements Runnable {
     int tamañof=0;
     int tiempov=0;
     String nombrev="";
+    String ti = "";
+    String tf ="";
 
    
     public main() {
@@ -62,9 +65,11 @@ public class main extends javax.swing.JFrame implements Runnable {
        boolean First;
       while(true)
       {
+          
         modelo.getDataVector().removeAllElements();    
 
       if(lista.getTamanio() >0){
+         
           First = false;
    
           if(EnCurso==null)
@@ -86,12 +91,17 @@ public class main extends javax.swing.JFrame implements Runnable {
                  unidor[1]=tiempo[i];
                  modelo.addRow(unidor);
             }
-          
+                //String hexadecimal = Integer.toHexString(tamañof);
+                //hexadecimal = decimalAHexadecimal(tamañof);
+                
                 nombrev = EnCurso.getNombre();
                 tamañoi = EnCurso.getTamaño();
+                ti = EnCurso.Hexadecimales(tamañoi);
                 tamañof = EnCurso.getTamaño();
+                tf = EnCurso.Hexadecimales(tamañof);
                 tiempov = EnCurso.getTiempo();
-                tabla(tamañoi,tamañof, tiempov, nombrev);
+               
+                tabla(ti,tf, tiempov, nombrev);
                 
                 EnCurso.setTiempo(EnCurso.getTiempo()-1);
                                           try {
@@ -181,14 +191,14 @@ public class main extends javax.swing.JFrame implements Runnable {
      
   
     
-    private void tabla(int tamañoi, int tamañof, int tiempov, String nombrev) {
+    private void tabla(String ti, String tf, int tiempov, String nombrev) {
         jLabel6.setText(nombrev);
-        jLabel11.setText(""+ tiempov);
-        jLabel12.setText(" " + tamañof);
-        jLabel13.setText(" " + tamañoi);
+        jLabel11.setText(""+tiempov);
+        jLabel12.setText(ti);
+        jLabel13.setText(tf);
     }
-           
-    
+   
+            
     
     @Override
     public void run() {
@@ -461,14 +471,13 @@ public class main extends javax.swing.JFrame implements Runnable {
                                 .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
                                 .addComponent(jLabel4)
                                 .addGap(86, 86, 86)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))))
