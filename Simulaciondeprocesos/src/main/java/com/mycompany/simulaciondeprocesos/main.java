@@ -32,8 +32,6 @@ public class main extends javax.swing.JFrame implements Runnable {
     Thread h1;
     Pintores Dibujo = new Pintores();
     Robin RR = new Robin();
-    int restar1 = 0;
-    private int contadorP = 0;
     int[] Memoria;
     int limMem;
     int x = 150;
@@ -44,20 +42,21 @@ public class main extends javax.swing.JFrame implements Runnable {
         initComponents();
         h1 = new Thread((Runnable) this);
         h1.start();
-        // timer.start();
         RR.start();
         Dibujo.start();
         limMem=41;
         Memoria = new int[41];
         Arrays.fill(Memoria, -1);
+        Dibujo.Running();
     }
 
     public void Blanquear() {
         Graphics g = getGraphics();
+
         Graphics lapiz = getGraphics();
         //Panel Memoria
         g.setColor(Color.WHITE);
-        g.fillRect(x, y-(14*limMem), 100, 14 * limMem);
+        g.fillRect(x, y-(14*limMem), 130, 14 * limMem);
 
         //Activador
         g.setColor(Color.RED);
@@ -77,7 +76,6 @@ public class main extends javax.swing.JFrame implements Runnable {
             lapiz.drawString(String.format("%02d", i)+" ---", x - 30, y - (14 * i)-5);
             lapiz.drawString("_", x - 10, y - (14 * i)-2);
         }
-
     }
 
     public void Repaint() {
@@ -108,18 +106,17 @@ public class main extends javax.swing.JFrame implements Runnable {
                         Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     PContador(limMem+1, true);
-
                     if (lista.getTamanio() > 0) {
                         First = false;
-
                         if (EnCurso == null) {
                             EnCurso = lista.getInicio();
                             First = true;
                         }
-                        tabla(EnCurso.getNombre(), EnCurso.getLimite() + EnCurso.getTiempo(), EnCurso.getBase(), EnCurso.getLimite());
-
+                        int quantum=5;
+                        while(quantum!=0)
+                        {
+                                                    tabla(EnCurso.getNombre(), EnCurso.getLimite() + EnCurso.getTiempo(), EnCurso.getBase(), EnCurso.getLimite());
                         EnCurso.setTiempo(EnCurso.getTiempo() - 1);
-
                         PContador(EnCurso.getLimite() + EnCurso.getTiempo() + 1, false);
                         try {
                             Thread.sleep(1000);
@@ -143,9 +140,10 @@ public class main extends javax.swing.JFrame implements Runnable {
                             historial += "P" + EnCurso.getId() + "  finalizado a las " + lblHora.getText() + "\n";
                             txthisto.setText(historial);
                             Pintor("", EnCurso.getBase() - EnCurso.getLimite() + 1, EnCurso.getBase() + 1, true);
-
+                            quantum=1;
                         }
-
+                            quantum--;
+                        }
                         EnCurso = EnCurso.getSiguiente();
                     }
 
@@ -158,6 +156,16 @@ public class main extends javax.swing.JFrame implements Runnable {
 
     }
 
+    public class Add extends Thread
+    {
+        public void run(int tiempo, int Base) {
+            Pintor("P" + lista.getId_next(), tiempo, Base + 1, false);
+            lista.agregarAlFinal(lista.getId_next(), "P" + lista.getId_next(), Base, tiempo);
+            historial += "P" + (lista.getId_next()-1) + "  creado a las " + lblHora.getText() +"\n";
+            txthisto.setText(historial);
+        }
+    }
+    
     public class Pintores extends Thread {
 
         private boolean run = false;
@@ -171,7 +179,7 @@ public class main extends javax.swing.JFrame implements Runnable {
             while (true) {
                 while (run) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -190,7 +198,7 @@ public class main extends javax.swing.JFrame implements Runnable {
         } else {
             g.setColor(Color.GREEN);
         }
-        g.fillRect(x + 105, y - (14 * valores), 20, 14);
+        g.fillRect(x + 101, y - (14 * valores), 25, 14);
     }
 
 
@@ -265,8 +273,6 @@ public class main extends javax.swing.JFrame implements Runnable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txthisto = new javax.swing.JTextArea();
@@ -279,6 +285,8 @@ public class main extends javax.swing.JFrame implements Runnable {
         lbl_Base = new javax.swing.JLabel();
         lbl_Lim = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jbtnAgregar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -286,7 +294,7 @@ public class main extends javax.swing.JFrame implements Runnable {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(51, 51, 0));
+        setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowDeiconified(java.awt.event.WindowEvent evt) {
@@ -296,12 +304,6 @@ public class main extends javax.swing.JFrame implements Runnable {
                 formWindowOpened(evt);
             }
         });
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("Memoria principal");
-
-        jLabel2.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
-        jLabel2.setText("Procesador");
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -411,6 +413,12 @@ public class main extends javax.swing.JFrame implements Runnable {
                 .addContainerGap())
         );
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("Memoria principal");
+
+        jLabel2.setFont(new java.awt.Font("Trebuchet MS", 1, 36)); // NOI18N
+        jLabel2.setText("Procesador");
+
         jbtnAgregar.setBackground(new java.awt.Color(0, 204, 204));
         jbtnAgregar.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jbtnAgregar.setForeground(new java.awt.Color(255, 255, 255));
@@ -445,7 +453,7 @@ public class main extends javax.swing.JFrame implements Runnable {
                         .addGap(84, 84, 84)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
+                        .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel4))))
@@ -487,13 +495,13 @@ public class main extends javax.swing.JFrame implements Runnable {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblHora, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(22, 22, 22))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
         pack();
@@ -524,7 +532,7 @@ public class main extends javax.swing.JFrame implements Runnable {
             }
             if (Suficiente == 0) {
                 Memoria[Inicio] = Inicio + tam - 1;
-                Memoria[Inicio + tam - 1] = id;
+                Memoria[Inicio + tam - 1] = Inicio;
                 Base = Inicio + tam - 1;
 
                 return Base;
@@ -546,20 +554,18 @@ public class main extends javax.swing.JFrame implements Runnable {
     private void jbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnAgregarActionPerformed
         int tiempo = (int) (Math.random() * 9 + 1);
         int Base = Disponible(tiempo, lista.getId_next());
-        if (Base >= 0) {
-            Pintor("P" + lista.getId_next(), tiempo, Base + 1, false);
-            lista.agregarAlFinal(lista.getId_next(), "P " + lista.getId_next(), Base, tiempo);
-            historial += "P" + this.contadorP + "  creado a las " + lblHora.getText() +"\n";
-            txthisto.setText(historial);
-            contadorP++;
+        if (Base != -1) {
             jbtnAgregar.enable(false);
-                        try {
-                Thread.sleep(100);
+            Add agregar  = new Add();
+            agregar.run(tiempo,Base);
+            agregar.stop();
+                  try {
+                Thread.sleep(200);
 
             } catch (InterruptedException ex) {
                 Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
-            }
-                                    jbtnAgregar.enable(true);
+            }   
+            jbtnAgregar.enable(true);
 
         } else {
             JOptionPane.showMessageDialog(null, "No queda espacio espera a que los procesos sean terminados");
@@ -574,7 +580,15 @@ public class main extends javax.swing.JFrame implements Runnable {
 
     private void formWindowDeiconified(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeiconified
         // TODO add your handling code here:
-        Dibujo.Running();
+        //Dibujo.Running();
+
+                        try {
+                Thread.sleep(200);
+
+            } catch (InterruptedException ex) {
+                Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            }   
+        Blanquear();
     }//GEN-LAST:event_formWindowDeiconified
 
     /**

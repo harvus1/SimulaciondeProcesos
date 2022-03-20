@@ -68,25 +68,4 @@ public class Lista {
         id_next++;
     }
 
-    public boolean restar1(int posicion) {
-        boolean zero = false;
-        if (posicion >= 0 && posicion < tamanio) {
-            if (posicion == 0) {
-                inicio.setTiempo(inicio.getTiempo() - 1);
-                if (inicio.getTiempo() == 0) {
-                    zero = true;
-                }
-            } else {
-                Nodo aux = inicio;
-                for (int i = 0; i < posicion; i++) {
-                    aux = aux.getSiguiente();
-                }
-                aux.setTiempo(aux.getTiempo() - 1);
-                if (aux.getTiempo() == 0) {
-                    zero = true;
-                }
-            }
-        }
-        return zero;
-    }
 }
